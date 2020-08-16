@@ -81,10 +81,8 @@ task installAngular(type:Exec) {
     inputs.dir "$webappDir"
     group = BasePlugin.BUILD_GROUP
     if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
-        commandLine "npm.cmd", "install @angular/cli"
         commandLine "npm.cmd", "install"
     } else {
-        commandLine "npm", "install @angular/cli"
         commandLine "npm", "install"
     }
 }
