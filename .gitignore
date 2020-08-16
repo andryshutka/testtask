@@ -1,4 +1,5 @@
 build/
 .idea
+.gradle/
 src/main/resources/static/dist
 src/main/resources/static/node_modules
