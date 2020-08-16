@@ -1,0 +1,5 @@
+build/
+.idea
+src/main/resources/static/
+src/main/webapp/teststore/node_modules/
+src/main/webapp/teststore/dist/

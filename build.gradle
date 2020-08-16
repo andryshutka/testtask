@@ -1,0 +1,90 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.ashutka'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def profiles = 'prod'
+
+bootRun {
+    args = ["--spring.profiles.active=" + profiles]
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.javassist:javassist:3.18.2-GA'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.200'
+    compile 'org.apache.commons:commons-lang3:3.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def webappDir = "$projectDir/src/main/resources/static"
+def cliDir = "$webappDir/node_modules/@angular/cli/bin"
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["$webappDir/dist", "$projectDir/src/main/resources"]
+//        }
+//    }
+//}
+
+processResources {
+    dependsOn "buildAngular" //todo: uncomment this
+    exclude ('**/src/**', '**/node_modules/**')
+}
+
+task buildAngular(type:Exec) {
+    def tree = fileTree("$webappDir/dist")
+    tree.include '*.*'
+    tree.each { it.delete() }
+    // installAngular should be run prior to this task
+    dependsOn "installAngular"
+    workingDir "$webappDir"
+    inputs.dir "$webappDir"
+
+    // Add task to the standard build group
+    group = BasePlugin.BUILD_GROUP
+    // ng doesn't exist as a file in windows -> ng.cmd
+    if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+        commandLine "npm.cmd", "start"
+    } else {
+        commandLine "npm", "start"
+    }
+}
+
+task installAngular(type:Exec) {
+    workingDir "$webappDir"
+    inputs.dir "$webappDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+        commandLine "npm.cmd", "install @angular/cli"
+        commandLine "npm.cmd", "install"
+    } else {
+        commandLine "npm", "install @angular/cli"
+        commandLine "npm", "install"
+    }
+}
