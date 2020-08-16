@@ -1,5 +1,4 @@
 build/
 .idea
-src/main/resources/static/
-src/main/webapp/teststore/node_modules/
-src/main/webapp/teststore/dist/
+src/main/resources/static/dist
+src/main/resources/static/node_modules

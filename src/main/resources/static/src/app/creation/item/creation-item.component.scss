@@ -1,0 +1,24 @@
+.item-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .item-name {
+    font-size: 16px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    span {
+      font-size: 11px;
+    }
+  }
+
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+}

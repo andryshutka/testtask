@@ -1,0 +1,24 @@
+<div class="list-component">
+    <div class="header">
+        <mat-form-field class="input-full-width">
+            <mat-label>Search</mat-label>
+            <input matInput #input placeholder="iTunes albums and Google books" [(ngModel)]="searchCriteria">
+        </mat-form-field>
+    </div>
+
+    <div class="creation-wrapper" *ngIf="searchCriteria && creations.length > 0">
+        <mat-list class="creation-list">
+            <mat-list-item *ngFor="let creation of creations">
+                <app-creation-item class="creation-list-item" [creation]="creation"></app-creation-item>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="search-label" *ngIf="!searchCriteria && !requestRunning">
+        <p>Type you search criteria to see the results here.</p>
+    </div>
+
+    <div class="search-label" *ngIf="searchCriteria && creations.length == 0 && !requestRunning">
+        <p>No results, try to adjust your query.</p>
+    </div>
+</div>

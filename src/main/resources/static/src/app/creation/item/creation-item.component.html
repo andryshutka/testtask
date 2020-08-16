@@ -1,0 +1,12 @@
+<div class="item-wrapper">
+    <h3 matLine class="item-name">
+        {{creation.title}}
+        <span>{{creation.author}}</span>
+    </h3>
+    <p matLine class="item-info">
+        <mat-chip-list>
+            <mat-chip color="primary" *ngIf="creation.type == 'BOOK'" disabled>Book</mat-chip>
+            <mat-chip color="accent" *ngIf="creation.type == 'ALBUM'" disabled>Album</mat-chip>
+        </mat-chip-list>
+    </p>
+</div>
