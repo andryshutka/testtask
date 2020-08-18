@@ -36,6 +36,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'junit:junit:4.12'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+
 }
 
 test {
@@ -53,8 +57,8 @@ def cliDir = "$webappDir/node_modules/@angular/cli/bin"
 //}
 
 processResources {
-    dependsOn "buildAngular" //todo: uncomment this
-    exclude ('**/src/**', '**/node_modules/**')
+   // dependsOn "buildAngular" //todo: uncomment this
+   // exclude ('**/src/**', '**/node_modules/**')
 }
 
 task buildAngular(type:Exec) {
